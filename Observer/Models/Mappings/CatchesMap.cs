@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
+using System.Linq;
+using System.Web;
+
+namespace Observer.Models.Mappings
+{
+    public class CatchesMap : EntityTypeConfiguration<CatchesModel>
+    {
+        public CatchesMap()
+        {
+            HasKey(e => e.Id);
+
+            ToTable("Catches");
+        }
+    }
+}

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="content-body">
+    <div class="card-actions">
+        <div class="row">
+            <div class="col-md-1 col-lg-2"></div>
+            <div class="col-md-10 col-lg-8">
+                <div class="card" id="LoginCard" style="height:100%;">
+                    <div class="card-header">
+                        <h2 class="card-subtitle line-on-side text-center pt-2">
+                            <span>Login</span>
+                        </h2>
+                    </div>
+                    <div class="card-content w-75 m-auto" id="InitialMenu" style="display:block;">
+                        @{
+                            if (ViewBag.ErrorMessage != null)
+                            {
+                                <div class="alert bg-danger alert-icon-left alert-arrow-left alert-dismissible mb-2 ml-md-5 mr-md-5" role="alert">
+                                    <span class="alert-icon"><i class="la la-warning"></i></span>
+                                    @ViewBag.ErrorMessage
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning alert-icon-left alert-arrow-left alert-dismissible mb-2 ml-md-5 mr-md-5" role="alert">
+                                    <span class="alert-icon"><i class="la la-info-circle"></i></span>
+                                    Action requires authorization, please enter your credential.<br /><a href="/Register" style="color: #4242b3;">New User? Click here to Register.</a>
+                                </div>
+                            }
+                        }
+                        <div class="row">
+                            <div class="col-md-3 col-sm-0"></div>
+                            <div class="col-md-6 col-sm-12">
+                                <ul class="nav nav-pills nav-pill-bordered">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="base-pillOpt1" data-toggle="pill" href="#email"
+                                           aria-expanded="true">Email Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="base-pillOpt2" data-toggle="pill" href="#qr" aria-expanded="false">QR Login</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content px-1 pt-1">
+                                    <div role="tabpanel" class="tab-pane active zoomIn" id="email" aria-expanded="true"
+                                         aria-labelledby="base-pillOpt1">
+                                        <div class="form-group mt-1">
+                                            <label for="Email" class="text-bold-400">Email Address *</label>
+                                            <div class="controls">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span id="basic-addon3" class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                                    <input type="email" name="Email" id="Email" class="form-control" required="">
+                                                    <div class=""></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mb-3">
+                                            <a class="btn btn-secondary mr-1" href="#" role="button" id="backbutton">Back</a>
+                                            <a href="#" class="btn btn-primary" role="button" id="loginbutton">Login</a>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="qr" aria-labelledby="base-pillOpt2">
+                                        <img src="@ViewBag.QRImage" width="300" style="margin: 0 auto; width:300px; display: block;" />
+                                        <div class="alert alert-light" role="alert" style="text-align:center;">
+                                            Login by scanning the QR Code using your smartphone.<br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-0"></div>
+                        </div>
+                    </div>
+                    <div class="card-content w-75 m-auto" id="PostMenu" style="display:none;">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-0"></div>
+                            <div class="col-md-6 col-sm-12">
+                                <ul class="nav nav-pills nav-pill-bordered">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" id="base-pillOpt1" data-toggle="pill" href="#"
+                                           aria-expanded="true">Email Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="base-pillOpt2" data-toggle="pill" href="#" aria-expanded="false">QR Login</a>
+                                    </li>
+                                </ul>
+                                <div class="mt-2">
+                                    <h3 class="text-center">Session Code:</h3>
+                                    <h2 class="error-code text-center" id="SessionCode" style="font-size: 70px;"></h2>
+                                    <div style="position:relative; width:320px; height:320px; display:block; margin: 0 auto;">
+                                        <span style="position: absolute; top:120px; left: 120px; z-index:15;"><i class="fas fa-lock" style="font-size: 80px; color:#a46363;"></i></span>
+                                        <span style="background-color:black; width:320px; height:320px; opacity: 0.8; margin: 0 auto; z-index:5; position:absolute; ">
+                                        </span>
+                                        <img src="@ViewBag.QRImage" width="300" style="margin: 0 auto; width:300px; position:absolute; opacity:1 !important; z-index:1; top:10px; left:10px;" />
+                                    </div>
+                                    <div class="alert alert-dark mt-2 mb-2" role="alert" style="text-align:center; width: 100%; margin:0 auto;">
+                                        QR Captured, please confirm your identification.<br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-lg-2"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var loginSessionId = "@ViewBag.LoginSessionId";
+    var loginKey = "@ViewBag.Key";
+    var loginLink = "@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port/login?status=12";
+    var homeLink = "@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port";
+</script>
+<script src="~/Content/lib/webobserver/js/observe/Login.js"></script>

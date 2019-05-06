@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="content-body">
+    <div class="card-actions">
+        <div class="row">
+            <div class="col-md-1 col-lg-2"></div>
+            <div class="col-md-10 col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-subtitle line-on-side text-center pt-2">
+                            <span>Create Account</span>
+                        </h2>
+                    </div>
+                    <div class="card-content w-75 m-auto">
+                        @{
+                            if (ViewBag.ErrorMessage != null)
+                            {
+                                <div class="alert bg-danger alert-icon-left alert-arrow-left alert-dismissible mb-2 ml-md-5 mr-md-5" role="alert">
+                                    <span class="alert-icon"><i class="la la-warning"></i></span>
+                                    @ViewBag.ErrorMessage
+                                </div>
+                            }
+                        }
+                        <div class="row">
+                            <div class="col-md-3 col-sm-0"></div>
+                            <div class="col-md-6 col-sm-12">
+                                <form class="form-horizontal form-simple" method="post" asp-action="Register">
+                                    <div class="form-group">
+                                        <label for="Email" class="text-bold-400">Email Address *</label>
+                                        <div class="controls">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span id="basic-addon3" class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                                <input type="email" name="Email" class="form-control" required="" data-validation-required-message="An Email is required." aria-invalid="false">
+                                                <div class="help-block block m-0"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Email" class="text-bold-400">Display Name</label>
+                                        <div class="controls">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span id="basic-addon3" class="input-group-text"><i class="la la-user"></i></span></div>
+                                                <input type="text" name="Name" class="form-control" required="" maxlength="20" data-validation-required-message="A display name is required." aria-invalid="false">
+                                                <div class="help-block block m-0"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mb-3">
+                                        <a class="btn btn-secondary mr-1" href="#" role="button" id="backbutton">Back</a>
+                                        <button type="submit" class="btn btn-primary">Register</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-3 col-sm-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-lg-2"></div>
+        </div>
+    </div>
+</div>
+

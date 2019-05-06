@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="content-body">
+    <div class="card-actions">
+        <div class="row">
+            <div class="col-md-1 col-lg-2"></div>
+            <div class="col-md-10 col-lg-8">
+                <div class="card" id="LoginCard" style="height:100%;">
+                    <div class="card-header">
+                        <h2 class="card-subtitle line-on-side text-center pt-2">
+                            <span>QR Login Confirmation</span>
+                        </h2>
+                    </div>
+                    <div class="card-content w-75 m-auto">
+                        <div>
+                            <h3 class="text-center">Session Code:</h3>
+                            <h2 class="error-code text-center mb-2" style="font-size: 70px;">@ViewBag.SessionCode</h2>
+                        </div>
+                        <div class="bs-callout-success callout-border-left callout-square callout-transparent mt-1 p-1">
+                            <strong>QR Login</strong>
+                            <p>
+                                QR Captured, are you sure you want to continue?
+                                <br />
+                                Please ensure the session code shown matches the one on the login screen.
+                            </p>
+                        </div>
+                        <div class="text-center mt-2 mb-3">
+                            <a class="btn btn-secondary mr-1" href="#" role="button" id="nobutton">No</a>
+                            <a href="#" class="btn btn-primary" role="button" id="yesbutton">Yes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-lg-2"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var block_ele = $('#LoginCard');
+    var loginSessionId = "@ViewBag.SessionId";
+    var loginKey = "@ViewBag.ProceedKey";
+    var homeLink = "@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port?status=12";
+    var loginLink = "@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port?status=14";
+
+    $(document).ready(function () {
+        setTimeout(expireRefresh, 30000);
+    });
+
+    $('#yesbutton').on('click', function () {
+        onLoadingModal();
+        setTimeout(function () {
+            $.ajax({
+                url: '/Api/Login/QRLogin',
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                data: { 'SessionId': loginSessionId, 'SessionKey': loginKey },
+                success: function (response) {
+                    if (response.Status == "Authorized") {
+                        window.location.href = loginLink;
+                    } else if (response.Status == "Unauthorized") {
+                        swal("Rejected", "Unauthorized access detected.", "error");
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    swal("Error", errorThrown, "error");
+                }
+            });
+            offLoadingModal();
+        }, 500);
+    });
+
+    $('#nobutton').on('click', function () {
+        onLoadingModal();
+        setTimeout(function () {
+            $.ajax({
+                url: '/Api/Login/QRLoginCancel',
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                data: { 'SessionId': loginSessionId },
+                success: function (response) {
+                    if (response == 1) {
+                        window.location.href = homeLink;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    swal("Error", errorThrown, "error");
+                }
+            });
+            offLoadingModal();
+        }, 500);
+    });
+
+    function onLoadingModal() {
+        $(block_ele).block({
+            message: '<div class="ft-refresh-cw icon-spin font-medium-2"></div>',
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.8,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                padding: 0,
+                backgroundColor: 'transparent'
+            }
+        });
+    }
+
+    function offLoadingModal() {
+        $(block_ele).unblock({
+        });
+    }
+
+    function expireRefresh() {
+        window.location.href = homeLink;
+    }
+
+
+</script>

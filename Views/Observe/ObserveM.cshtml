@@ -1,0 +1,147 @@
+﻿@model IEnumerable<Observer.Models.ViewModels.ObserveListOutputModel>
+@{
+    Layout = "~/Views/Shared/_BoxLayout.cshtml";
+}
+
+<div class="content-header row">
+    <div class="content-header-left col-md-6 col-12 mb-2">
+        <h3 class="content-header-title">Observe List</h3>
+        <div class="row breadcrumbs-top">
+            <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        Observe List
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body">
+    <section id="base-style">
+        <div class="row">
+            <div class="col-12">
+                <div id="ObserveCard" class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Web Observe List</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <a href="/Observe/Create" id="modals" class="btn btn-float btn-outline-success btn-round btn-float-lg" style="width:50px; height:50px;" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false"><i class="la la-ellipsis-h" style="font-size:30px; padding-top: 4px;"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" style="width: 200px;">
+                                    <button class="dropdown-item" type="button" data-toggle="modal" data-target="#newModal">Create</button>
+                                    <button class="dropdown-item" type="button" onclick="deleteSelection()"><span style="color:lightcoral;">Delete</span></button>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body card-dashboard">
+                            <table class="table table-striped table-bordered base-style skin skin-square">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;"></th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Date Created</th>
+                                        <th style="width:10px;">Option</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Observe-List">
+                                    @{
+                                        foreach (Observer.Models.ViewModels.ObserveListOutputModel m in Model)
+                                        {
+                                                <tr>
+                                                    <td><input type="checkbox" id="@m.Id"></td>
+                                                    <td><a href="/Observe/Modify/@m.Id">@m.Name</a></td>
+                                                    <td style="width: 10px; text-align:center;">
+                                                        @{ 
+                                                            if (m.Status == 1)
+                                                            {
+                                                        <div class="badge badge-success">Enabled</div>
+                                                            } else if (m.Status == 0)
+                                                            {
+                                                        <div class="badge badge-danger">Disabled</div>
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td style="width: 10px; text-align:center;">@m.DateCreated</td>
+                                                    <td style="width: 10px;">
+                                                        <div class="btn-group">
+                                                          <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown"
+                                                          aria-haspopup="true" aria-expanded="false">
+                                                            Action
+                                                          </button>
+                                                          <div class="dropdown-menu open-left arrow">
+                                                            <button class="dropdown-item" type="button" onclick="editSingleSelection('@m.Id')">Edit</button>
+                                                            <button class="dropdown-item" type="button" onclick="deleteSingleSelection('@m.Id')">Delete</button>
+                                                          </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                        }
+                                    }
+                                    </tbody>
+                                    <!--
+        <tbody>
+            <tr>
+                <td><input type="checkbox" id="input-11"></td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+            </tr>
+        </tbody>
+        -->
+                                </table>
+                            <div class="modal fade text-left" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel1">New Observe</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Observe Name</label>
+                                                <input type="text" id="ObserveName" class="form-control" name="ObserveName">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                                            <button id="createButton" type="button" class="btn btn-outline-primary" onclick="createObserve()">Create</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .page-item.active .page-link {
+        border-color: #5C2323;
+        background-color: #5C2323;
+    }
+
+    td {
+        font-size: 16px;
+        vertical-align: middle !important;
+    }
+</style>
+<script src="~/Content/lib/webobserver/js/observe/ObserveM.js"></script>
+<script>
+function editSingleSelection(id) {
+    window.location.href = "@Request.Url.Scheme://@Request.Url.Host:@Request.Url.Port/Observe/ModifyM/" + id;
+}
+</script>
