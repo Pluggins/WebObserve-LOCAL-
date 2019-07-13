@@ -6292,9 +6292,7 @@
     <Content Include="Content\lib\jquery-validation\.bower.json" />
     <Content Include="Content\lib\jquery-validation\LICENSE.md" />
     <Content Include="Content\lib\jquery\.bower.json" />
-    <None Include="Properties\PublishProfiles\amazecraft.net - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\amazecraft.net - Web Deploy1.pubxml" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\OfficialDeploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
