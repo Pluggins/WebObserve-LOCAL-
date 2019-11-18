@@ -20,6 +20,7 @@ namespace Observer.Models
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
         public DbSet<IdentityUserRole> AspNetUserRoles { get; set; }
         public new DbSet<UsersModel> Users { get; set; }
+        public DbSet<PlayersModel> Players { get; set; }
         public DbSet<ObservesModel> Observes { get; set; }
         public DbSet<StepsModel> Steps { get; set; }
         public DbSet<PCMethodsModel> PCMethods { get; set; }
@@ -37,6 +38,7 @@ namespace Observer.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new UsersMap());
+            modelBuilder.Configurations.Add(new PlayersMap());
             modelBuilder.Configurations.Add(new ObservesMap());
             modelBuilder.Configurations.Add(new StepsMap());
             modelBuilder.Configurations.Add(new PCMethodsMap());

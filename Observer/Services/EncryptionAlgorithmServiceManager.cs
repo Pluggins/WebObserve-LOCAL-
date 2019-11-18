@@ -102,5 +102,25 @@ namespace Observer.Services
 
             return new Guid(bytes);
         }
+
+        public static string GetRandomDigit(int length)
+        {
+            const string valid = "1234567890";
+            string s = "";
+            using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider())
+            {
+                while (s.Length != length)
+                {
+                    byte[] oneByte = new Byte[1];
+                    provider.GetBytes(oneByte);
+                    char randomChar = (char)oneByte[0];
+                    if (valid.Contains(randomChar))
+                    {
+                        s += randomChar;
+                    }
+                }
+            }
+            return s;
+        }
     }
 }

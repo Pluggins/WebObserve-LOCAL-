@@ -17,5 +17,6 @@ namespace Observer.Models
         [ForeignKey("Id")]
         public virtual ApplicationUser Fk_AspUser { get; set; }
         public virtual ICollection<ObservesModel> List_Observes { get; set; }
+        public virtual ICollection<PlayersModel> List_Players { get; set; }
     }
 }
